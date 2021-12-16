@@ -1,0 +1,68 @@
+.container {
+  .header {
+    margin-top: 16px;
+
+    div {
+      color: rgb(220, 0, 48);
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 150%;
+    }
+  }
+
+  .add-hero-block {
+    position: relative;
+    padding: 0 48px 8px;
+
+    .header {
+      margin-top: 32px;
+      font-size: 24px;
+      line-height: 150%;
+    }
+
+    .add-hero-form {
+      width: 100%;
+
+      .create-button {
+        height: 52px;
+      }
+    }
+  }
+
+  .divider {
+    width: 30vw;
+    margin: auto;
+  }
+
+  .heroes-list {
+    position: relative;
+    .hero-card {
+      width: 240px;
+      border: 1px solid #8080804f;
+      border-radius: 5px;
+      padding: 8px 16px;
+      &:hover {
+        box-shadow: 0px 1px 2px rgba(0,0,0,0.4);
+      }
+
+      .avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          border-radius: 50%;
+          height: 48px;
+          width: 48px;
+        }
+      }
+
+      .name {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+}

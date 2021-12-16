@@ -1,0 +1,54 @@
+<div class="container" fxLayout="column" fxLayoutGap="16px">
+    <div class="header" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center">
+        <img src="https://raw.githubusercontent.com/rx-angular/rx-angular/github-pages/docs/images/logo.jpg" alt="">
+        <div>Reactive Component State for Angular</div>
+    </div>
+
+    <form [formGroup]="heroForm">
+        <div class="add-hero-block" fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
+            <ngx-spinner [fullScreen]="false" bdColor="rgba(0,0,0,0.37)" color="rgb(255, 255, 255)" size="medium"
+                type="ball-clip-rotate-pulse" [name]="'create'">
+            </ngx-spinner>
+            <div class="header">
+                Create Hero
+            </div>
+            <div class="add-hero-form" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center">
+                <mat-form-field appearance="outline">
+                    <mat-label>Hero Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Spider man">
+                    <mat-error *ngIf="heroForm.get('name')?.hasError('required')">
+                        Hero name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline">
+                    <mat-label>Avatar</mat-label>
+                    <input matInput formControlName="url" placeholder="https://image.com/">
+                </mat-form-field>
+    
+                <div class="create-button">
+                    <button mat-stroked-button color="primary" (click)="createHero()" [disabled]="heroForm.invalid">Create</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="heroes-list" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center">
+        <ngx-spinner [fullScreen]="false" bdColor="rgba(0,0,0,0.37)" color="rgb(255, 255, 255)" size="medium"
+            type="ball-clip-rotate-pulse" [name]="'list'">
+        </ngx-spinner>
+        <div *ngFor="let hero of heroes; let i = index" class="hero-card" fxLayout="row" fxLayoutGap="8px"
+            fxLayoutAlign="start center">
+            <div class="avatar">
+                <img [src]="hero.url" alt="hero">
+            </div>
+            <div class="name">{{ hero.name }}</div>
+
+            <button mat-icon-button color="warn" (click)="deleteHero(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
