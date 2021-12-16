@@ -12,11 +12,13 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { HeroService } from './hero.service';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { HeroProfileComponent } from './hero-profile/hero-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent
+    HeroesComponent,
+    HeroProfileComponent,
   ],
   imports: [
     BrowserModule,
