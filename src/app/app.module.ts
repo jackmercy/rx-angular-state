@@ -10,6 +10,8 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { MaterialModule } from './material.module';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HeroService } from './hero.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { HeroService } from './hero.service';
     BrowserAnimationsModule,
 
     MaterialModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [HeroService],
   bootstrap: [AppComponent]

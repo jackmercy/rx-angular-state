@@ -17,7 +17,7 @@ export interface HeroProfile {
 export class HeroesComponent implements OnInit {
   public heroForm: FormGroup;
   public heroes: HeroProfile[] = [];
-
+ // TODO: add hero details page to display hero infor -> that page will need component store.
   constructor(
     private heroService: HeroService,
     private formBuilder: FormBuilder,

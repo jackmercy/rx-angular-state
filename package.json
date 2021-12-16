@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@ngrx/effects": "^13.0.2",
+    "@ngrx/store": "^13.0.2",
     "@rx-angular/state": "^1.4.6",
     "ngx-spinner": "^13.0.0",
     "rxjs": "~7.4.0",
