@@ -16,9 +16,14 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Hero Name</mat-label>
                     <input matInput formControlName="name" placeholder="Spider man">
-                    <mat-error *ngIf="heroForm.get('name')?.hasError('required')">
+                    <!-- <mat-error *ngIf="heroForm.get('name')?.hasError('required')">
                         Hero name is <strong>required</strong>
-                    </mat-error>
+                    </mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Age</mat-label>
+                    <input type="number" matInput formControlName="age" placeholder="21">
                 </mat-form-field>
     
                 <mat-form-field appearance="outline">
@@ -41,10 +46,10 @@
         </ngx-spinner>
         <div *ngFor="let hero of heroes; let i = index" class="hero-card" fxLayout="row" fxLayoutGap="8px"
             fxLayoutAlign="start center">
-            <div class="avatar">
+            <div class="avatar" (click)="goToHeroDetails(hero.id)">
                 <img [src]="hero.url" alt="hero">
             </div>
-            <div class="name">{{ hero.name }}</div>
+            <div class="name" (click)="goToHeroDetails(hero.id)">{{ hero.name }}</div>
 
             <button mat-icon-button color="warn" (click)="deleteHero(i)">
                 <mat-icon>delete</mat-icon>

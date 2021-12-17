@@ -1,12 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { delay } from 'rxjs';
 import { HeroService } from '../hero.service';
 
 export interface HeroProfile {
+  id: string; 
   url: string;
   name: string;
+  age?: number;
 }
 
 @Component({
@@ -17,15 +20,12 @@ export interface HeroProfile {
 export class HeroesComponent implements OnInit {
   public heroForm: FormGroup;
   public heroes: HeroProfile[] = [];
- // TODO: add hero details page to display hero infor -> that page will need component store/rxAngular for state.
- // TODO: maybe global state will be eaiser to get using rxangular.
- // try full ngrx & component store flow.
- // then compare when implement with rxangular.
- // but need to have the hero profile component first.
+
   constructor(
     private heroService: HeroService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
+    private router: Router,
     private changeDef: ChangeDetectorRef
   ) { }
 
@@ -46,7 +46,8 @@ export class HeroesComponent implements OnInit {
   buildHeroForm(): void {
     this.heroForm = this.formBuilder.group({
       url: this.formBuilder.control(''),
-      name: this.formBuilder.control('', Validators.required)
+      name: this.formBuilder.control(''),
+      age: this.formBuilder.control(''),
     });
   }
 
@@ -76,5 +77,9 @@ export class HeroesComponent implements OnInit {
         }
       }
     );
+  }
+
+  goToHeroDetails(id: string): void {
+    this.router.navigate(['./detail', id]);
   }
 }

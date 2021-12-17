@@ -24,6 +24,7 @@
     "@ngrx/effects": "^13.0.2",
     "@ngrx/store": "^13.0.2",
     "@rx-angular/state": "^1.4.6",
+    "ng-qrcode": "^6.0.0",
     "ngx-spinner": "^13.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

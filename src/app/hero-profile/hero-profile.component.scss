@@ -1,0 +1,44 @@
+.container {
+  position: relative;
+
+  .header {
+    margin-top: 16px;
+
+    div {
+      color: rgb(220, 0, 48);
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 150%;
+    }
+
+    .go-back {
+        cursor: pointer;
+        border-radius: 12px;
+        ::ng-deep {
+            .mat-icon {
+                color: darkgrey;
+            }
+        }
+    }
+  }
+
+  .hero-info {
+    justify-content: center;
+    align-items: flex-start;
+
+    .hero-avatar {
+      img {
+        aspect-ratio: 1 / 1;
+        height: 150px;
+        border-radius: 50%;
+      }
+    }
+
+    .details {
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 24px;
+      font-size: 24px;
+    }
+  }
+}

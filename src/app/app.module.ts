@@ -13,6 +13,7 @@ import { HeroService } from './hero.service';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HeroProfileComponent } from './hero-profile/hero-profile.component';
+import { QrCodeModule } from 'ng-qrcode';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HeroProfileComponent } from './hero-profile/hero-profile.component';
     BrowserAnimationsModule,
 
     MaterialModule,
+    QrCodeModule,
     NgxSpinnerModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([])

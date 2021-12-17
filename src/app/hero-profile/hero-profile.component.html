@@ -1,1 +1,32 @@
-<p>hero-profile works!</p>
+<div class="container" fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center center">
+    <div class="header" fxLayout="row" fxLayoutGap="16px">
+        <div class="go-back" matRipple (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </div>
+        <div>Hero Information</div>
+    </div>
+
+    <div *ngIf="hero" class="hero-id" fxLayout="column" fxLayoutAlign="center center">
+        <qr-code [value]="hero.id" size="300" errorCorrectionLevel="M"></qr-code>
+
+        <div>Hero's ID</div>
+    </div>
+
+    <div *ngIf="hero" class="hero-info" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start">
+        <div class="hero-avatar">
+            <img [src]="hero.url" alt="avatar">
+        </div>
+
+        <div class="details" fxLayout="column" fxLayoutGap="16px" >
+            <div class="hero-name">
+                <span>Hero name: </span>
+                <span>{{ hero.name }}</span>
+            </div>
+
+            <div class="hero-age">
+                <span>Age: </span>
+                <span>{{ hero.age }}</span>
+            </div>
+        </div>
+    </div>
+</div>

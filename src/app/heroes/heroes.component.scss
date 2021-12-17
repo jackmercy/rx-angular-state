@@ -37,6 +37,7 @@
   .heroes-list {
     position: relative;
     .hero-card {
+      cursor: pointer;
       width: 240px;
       border: 1px solid #8080804f;
       border-radius: 5px;
