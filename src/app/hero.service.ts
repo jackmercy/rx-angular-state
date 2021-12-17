@@ -76,8 +76,9 @@ export class HeroService {
     return of({ success: true }).pipe(delay(500));
   }
 
-  deleteHero(index: number): Observable<any> {
+  deleteHero(id: string): Observable<any> {
     const currentValue = this.heroes$.getValue();
+    const index = currentValue.findIndex(hero => hero.id === id);
     currentValue.splice(index, 1);
 
     return of({ deleted: true }).pipe(delay(500));

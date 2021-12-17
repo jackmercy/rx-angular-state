@@ -51,7 +51,7 @@
             </div>
             <div class="name" (click)="goToHeroDetails(hero.id)">{{ hero.name }}</div>
 
-            <button mat-icon-button color="warn" (click)="deleteHero(i)">
+            <button mat-icon-button color="warn" (click)="deleteHero(hero.id)">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>

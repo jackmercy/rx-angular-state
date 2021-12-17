@@ -66,9 +66,9 @@ export class HeroesComponent implements OnInit {
     );
   }
 
-  deleteHero(index: number): void {
+  deleteHero(id: string): void {
     this.spinner.show('list');
-    this.heroService.deleteHero(index).subscribe(
+    this.heroService.deleteHero(id).subscribe(
       resp => {
         if (resp) {
           // hide spinner.

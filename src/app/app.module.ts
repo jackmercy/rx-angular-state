@@ -14,7 +14,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HeroProfileComponent } from './hero-profile/hero-profile.component';
 import { QrCodeModule } from 'ng-qrcode';
-
+import { heroReducer } from './store/hero.reducer';
+import { HeroEffects } from './store/hero.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,8 +33,8 @@ import { QrCodeModule } from 'ng-qrcode';
     MaterialModule,
     QrCodeModule,
     NgxSpinnerModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot({heroReducer}),
+    EffectsModule.forRoot([HeroEffects])
   ],
   providers: [HeroService],
   bootstrap: [AppComponent]
