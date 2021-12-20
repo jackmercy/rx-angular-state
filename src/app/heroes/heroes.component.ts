@@ -1,12 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { delay } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HeroService } from '../hero.service';
+import * as heroActions from '../store/hero.actions';
+import { HeroState } from '../store/hero.reducer';
+import { selectHeroes } from '../store/hero.selectors';
 
 export interface HeroProfile {
-  id: string; 
+  id: string;
   url: string;
   name: string;
   age?: number;
@@ -19,12 +23,12 @@ export interface HeroProfile {
 })
 export class HeroesComponent implements OnInit {
   public heroForm: FormGroup;
-  public heroes: HeroProfile[] = [];
+  public heroes$: Observable<HeroProfile[]>;
 
   constructor(
-    private heroService: HeroService,
-    private formBuilder: FormBuilder,
+    private store: Store<HeroState>,
     private spinner: NgxSpinnerService,
+    private formBuilder: FormBuilder,
     private router: Router,
     private changeDef: ChangeDetectorRef
   ) { }
@@ -32,15 +36,9 @@ export class HeroesComponent implements OnInit {
   ngOnInit(): void {
     this.buildHeroForm();
     this.spinner.show('list');
+    this.store.dispatch(heroActions.getHeroes());
+    this.heroes$ = this.store.pipe(select(selectHeroes));
     this.changeDef.markForCheck();
-
-    this.heroService.getHeroesList().pipe(delay(500)).subscribe(
-      (heroes: HeroProfile[]) => {
-        this.heroes = heroes;
-        this.spinner.hide('list');
-        this.changeDef.markForCheck();
-      }
-    )
   }
 
   buildHeroForm(): void {
@@ -52,34 +50,21 @@ export class HeroesComponent implements OnInit {
   }
 
   createHero(): void {
-    const data = this.heroForm.value;
     this.spinner.show('create');
-    this.heroService.createHero(data).subscribe(
-      resp => {
-        if (resp) {
-          // hide spinner.
-          this.heroForm.reset();
-          this.spinner.hide('create');
-          this.changeDef.markForCheck();
-        }
-      }
-    );
+    const data = this.heroForm.value;
+    this.store.dispatch(heroActions.createHero({ hero: data }));
+    this.heroForm.reset();
+    this.changeDef.markForCheck();
   }
 
   deleteHero(id: string): void {
     this.spinner.show('list');
-    this.heroService.deleteHero(id).subscribe(
-      resp => {
-        if (resp) {
-          // hide spinner.
-          this.spinner.hide('list');
-          this.changeDef.markForCheck();
-        }
-      }
-    );
+    this.store.dispatch(heroActions.deleteHero({ id: id }));
+    this.changeDef.markForCheck();
   }
 
   goToHeroDetails(id: string): void {
     this.router.navigate(['./detail', id]);
+    this.changeDef.markForCheck();
   }
 }

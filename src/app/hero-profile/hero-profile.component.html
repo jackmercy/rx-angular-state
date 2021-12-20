@@ -6,13 +6,13 @@
         <div>Hero Information</div>
     </div>
 
-    <div *ngIf="hero" class="hero-id" fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="hero$|async as hero" class="hero-id" fxLayout="column" fxLayoutAlign="center center">
         <qr-code [value]="hero.id" size="300" errorCorrectionLevel="M"></qr-code>
 
         <div>Hero's ID</div>
     </div>
 
-    <div *ngIf="hero" class="hero-info" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start">
+    <div *ngIf="hero$|async as hero" class="hero-info" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start">
         <div class="hero-avatar">
             <img [src]="hero.url" alt="avatar">
         </div>

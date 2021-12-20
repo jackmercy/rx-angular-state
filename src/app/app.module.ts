@@ -16,6 +16,8 @@ import { HeroProfileComponent } from './hero-profile/hero-profile.component';
 import { QrCodeModule } from 'ng-qrcode';
 import { heroReducer } from './store/hero.reducer';
 import { HeroEffects } from './store/hero.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,8 +35,9 @@ import { HeroEffects } from './store/hero.effects';
     MaterialModule,
     QrCodeModule,
     NgxSpinnerModule,
-    StoreModule.forRoot({heroReducer}),
-    EffectsModule.forRoot([HeroEffects])
+    StoreModule.forRoot({app: heroReducer}),
+    EffectsModule.forRoot([HeroEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
   providers: [HeroService],
   bootstrap: [AppComponent]

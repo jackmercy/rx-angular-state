@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, Observable, of, throwError } from 'rxjs';
 import { HeroProfile } from './heroes/heroes.component';
+import { clone } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class HeroService {
 
   private defaultAvatar = 'https://i.pinimg.com/564x/95/76/57/9576572d657f37978aede9fca38e3da0.jpg';
 
+  get currentHeroes(): HeroProfile[] {
+    return this.heroes$.getValue();
+  }
+
   constructor() { }
 
   private guidGenerator(): string {
@@ -77,10 +82,14 @@ export class HeroService {
   }
 
   deleteHero(id: string): Observable<any> {
-    const currentValue = this.heroes$.getValue();
-    const index = currentValue.findIndex(hero => hero.id === id);
-    currentValue.splice(index, 1);
+    let currentValue = clone(this.currentHeroes);
+    const index = currentValue.findIndex((hero: HeroProfile) => hero.id === id);
+    if (index > -1) {
+      currentValue.splice(index, 1);
+      this.heroes$.next(currentValue);
+      return of({ deleted: true }).pipe(delay(500));
+    }
 
-    return of({ deleted: true }).pipe(delay(500));
+    return of({ deleted: false }).pipe(delay(500));
   }
 }

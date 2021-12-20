@@ -2,47 +2,36 @@ import { createReducer, on } from '@ngrx/store';
 import { HeroProfile } from '../heroes/heroes.component';
 import * as actions from './hero.actions';
 
-export interface GlobalState {
-  heroes: HeroProfile[]
+export interface AppState {};
+
+export interface HeroState {
+  heroes: HeroProfile[];
+  selectedHero: HeroProfile;
 }
 
-function guidGenerator(): string {
-  var S4 = function () {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  };
-  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-}
-
-function removeById(list: HeroProfile[], id: string): HeroProfile[] {
-  const index = list.findIndex(hero => hero.id === id);
-  const result = list.splice(index, 1);
-
-  return result || [];
-}
-
-const defaultAvatar = 'https://i.pinimg.com/564x/95/76/57/9576572d657f37978aede9fca38e3da0.jpg';
-
-export const initialState: GlobalState = {
-  heroes: []
+export const initialState: HeroState = {
+  heroes: [],
+  selectedHero: {
+    id: '',
+    name: '',
+    url: ''
+  }
 };
 
 export const heroReducer = createReducer(
   initialState,
   on(
-    actions.createHero, (state, { hero }) => ({
+    actions.getHeroesSuccess,
+    (state, { heroes }) => ({
       ...state,
-      heroes: [...state.heroes, {
-        ...hero,
-        id: guidGenerator(),
-        ...((hero?.url && hero?.url !== '') ? { url: hero?.url } : { url: defaultAvatar })
-      }]
+      heroes: [...heroes]
     })
   ),
   on(
-    actions.deleteHero,
-    (state, { id }) => ({
+    actions.getHeroDetailsSuccess,
+    (state, { selectedHero }) => ({
       ...state,
-      heroes: removeById(state.heroes, id)
+      selectedHero: selectedHero
     })
   )
 );

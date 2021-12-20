@@ -1,11 +1,20 @@
-import { createSelector } from '@ngrx/store';
-import { GlobalState } from './hero.reducer';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { HeroState } from './hero.reducer';
 
+export interface AppState {
+    app: HeroState;
+}
 
-export const selectState = (state: GlobalState) => state;
-
+export const selectHeroState = createFeatureSelector<HeroState>(
+   'app'
+);
 
 export const selectHeroes = createSelector(
-    selectState,
-    (state: GlobalState) => state.heroes
+    selectHeroState,
+    (state: HeroState) => state.heroes
+);
+
+export const selectHeroDetails = createSelector(
+    selectHeroState,
+    (state: HeroState) => state.selectedHero
 );

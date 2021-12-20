@@ -1,7 +1,7 @@
 <div class="container" fxLayout="column" fxLayoutGap="16px">
     <div class="header" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center">
         <img src="https://raw.githubusercontent.com/rx-angular/rx-angular/github-pages/docs/images/logo.jpg" alt="">
-        <div>Reactive Component State for Angular</div>
+        <div>State management with Angular</div>
     </div>
 
     <form [formGroup]="heroForm">
@@ -40,7 +40,7 @@
 
     <mat-divider class="divider"></mat-divider>
 
-    <div class="heroes-list" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center">
+    <div *ngIf="heroes$|async as heroes" class="heroes-list" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center">
         <ngx-spinner [fullScreen]="false" bdColor="rgba(0,0,0,0.37)" color="rgb(255, 255, 255)" size="medium"
             type="ball-clip-rotate-pulse" [name]="'list'">
         </ngx-spinner>
