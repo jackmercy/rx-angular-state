@@ -29,16 +29,6 @@ export const createHeroFailed = createAction(
     '[CREATE] Heroes list SUCCESS'
 );
 
-export const getHeroDetails = createAction(
-    '[GET] Hero details',
-    props<{ id: string }>()
-);
-
-export const getHeroDetailsSuccess = createAction(
-    '[GET] Hero details SUCCESS',
-    props<{ selectedHero: HeroProfile }>()
-);
-
 export const deleteHero = createAction(
     '[DELETE] Hero',
     props<{ id: string }>()

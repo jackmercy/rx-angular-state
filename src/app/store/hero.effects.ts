@@ -40,14 +40,6 @@ export class HeroEffects {
         )
     );
 
-    getHeroDetails$ = createEffect(() => this.actions$.pipe(
-        ofType(heroActions.getHeroDetails),
-        mergeMap(action => this.service.getHeroDetails(action.id).pipe(
-            map(resp => heroActions.getHeroDetailsSuccess({ selectedHero: resp }))
-        ))
-        // catchError return failed action
-    ));
-
     deleteHero$ = createEffect(() => this.actions$.pipe(
         ofType(heroActions.deleteHero),
         mergeMap(action => this.service.deleteHero(action.id).pipe(

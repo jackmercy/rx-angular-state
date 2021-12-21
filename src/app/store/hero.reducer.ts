@@ -26,12 +26,5 @@ export const heroReducer = createReducer(
       ...state,
       heroes: [...heroes]
     })
-  ),
-  on(
-    actions.getHeroDetailsSuccess,
-    (state, { selectedHero }) => ({
-      ...state,
-      selectedHero: selectedHero
-    })
   )
 );

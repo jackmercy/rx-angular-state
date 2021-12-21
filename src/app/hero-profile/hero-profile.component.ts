@@ -1,16 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HeroService } from '../hero.service';
 import { HeroProfile } from '../heroes/heroes.component';
-import { HeroState } from '../store/hero.reducer';
-import { getHeroDetails, getHeroDetailsSuccess } from '../store/hero.actions';
-import { selectHeroDetails } from '../store/hero.selectors';
+import { HeroProfileComponentStore } from './hero-profile.component-store';
+
 @Component({
   selector: 'app-hero-profile',
   templateUrl: './hero-profile.component.html',
-  styleUrls: ['./hero-profile.component.scss']
+  styleUrls: ['./hero-profile.component.scss'],
+  providers: [HeroProfileComponentStore]
 })
 export class HeroProfileComponent implements OnInit {
   hero$: Observable<HeroProfile>;
@@ -20,16 +18,17 @@ export class HeroProfileComponent implements OnInit {
   }
 
   constructor(
-    private store: Store<HeroState>,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private readonly componentStore: HeroProfileComponentStore,
     private changeDef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     if (this.heroId) {
-      this.store.dispatch(getHeroDetails({ id: this.heroId }));
-      this.hero$ = this.store.pipe(select(selectHeroDetails));
+      this.componentStore.getHero(this.heroId);
+      this.hero$ = this.componentStore.selectedHero();
+
       this.changeDef.markForCheck();
     }
   }
