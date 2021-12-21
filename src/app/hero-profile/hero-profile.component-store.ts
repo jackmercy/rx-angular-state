@@ -23,8 +23,7 @@ export class HeroProfileComponentStore extends ComponentStore<HeroDetailsState> 
         });
     }
 
-    // readonly hero$: Observable<HeroProfile> = this.select(state => state.hero);
-
+    // Effect 👇
     readonly getHero = this.effect((heroId$: Observable<string>) => {
         return heroId$.pipe(
             switchMap((id) => this.heroService.getHeroDetails(id).pipe(
@@ -37,10 +36,12 @@ export class HeroProfileComponentStore extends ComponentStore<HeroDetailsState> 
         )
     });
 
+    // reducer/action 👇
     readonly updateHero = this.updater((state, hero: HeroProfile) => ({
         hero: hero,
     }));
 
+    // Selector 👇
     selectedHero() {
         return this.select((state) => state.hero);
     }
