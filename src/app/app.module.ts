@@ -4,20 +4,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { QrCodeModule } from 'ng-qrcode';
+import { NgxSpinnerModule } from "ngx-spinner";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeroProfileComponent } from './hero-profile/hero-profile.component';
+import { HeroService } from './hero.service';
 import { HeroesComponent } from './heroes/heroes.component';
 import { MaterialModule } from './material.module';
-import { NgxSpinnerModule } from "ngx-spinner";
-import { HeroService } from './hero.service';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { HeroProfileComponent } from './hero-profile/hero-profile.component';
-import { QrCodeModule } from 'ng-qrcode';
-import { heroReducer } from './store/hero.reducer';
-import { HeroEffects } from './store/hero.effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,8 +33,8 @@ import { environment } from '../environments/environment';
     MaterialModule,
     QrCodeModule,
     NgxSpinnerModule,
-    StoreModule.forRoot({app: heroReducer}),
-    EffectsModule.forRoot([HeroEffects]),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
   providers: [HeroService],
