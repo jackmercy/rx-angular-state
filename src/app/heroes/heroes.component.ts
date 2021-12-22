@@ -41,14 +41,6 @@ export class HeroesComponent implements OnInit {
     this.changeDef.markForCheck();
   }
 
-  buildHeroForm(): void {
-    this.heroForm = this.formBuilder.group({
-      url: this.formBuilder.control(''),
-      name: this.formBuilder.control(''),
-      age: this.formBuilder.control(''),
-    });
-  }
-
   createHero(): void {
     this.spinner.show('create');
     const data = this.heroForm.value;
@@ -61,6 +53,14 @@ export class HeroesComponent implements OnInit {
     this.spinner.show('list');
     this.store.dispatch(heroActions.deleteHero({ id: id }));
     this.changeDef.markForCheck();
+  }
+
+  buildHeroForm(): void {
+    this.heroForm = this.formBuilder.group({
+      url: this.formBuilder.control(''),
+      name: this.formBuilder.control(''),
+      age: this.formBuilder.control(''),
+    });
   }
 
   goToHeroDetails(id: string): void {
