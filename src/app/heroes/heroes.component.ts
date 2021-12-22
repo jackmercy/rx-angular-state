@@ -34,7 +34,7 @@ export class HeroesComponent implements OnInit {
     this.spinner.show('list');
     this.changeDef.markForCheck();
 
-    this.heroService.getHeroesList().pipe(delay(500)).subscribe(
+    this.heroService.getHeroesList().subscribe(
       (heroes: HeroProfile[]) => {
         this.heroes = heroes;
         this.spinner.hide('list');
