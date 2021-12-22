@@ -43,14 +43,6 @@ export class HeroesComponent implements OnInit {
     )
   }
 
-  buildHeroForm(): void {
-    this.heroForm = this.formBuilder.group({
-      url: this.formBuilder.control(''),
-      name: this.formBuilder.control(''),
-      age: this.formBuilder.control(''),
-    });
-  }
-
   createHero(): void {
     const data = this.heroForm.value;
     this.spinner.show('create');
@@ -77,6 +69,14 @@ export class HeroesComponent implements OnInit {
         }
       }
     );
+  }
+
+  buildHeroForm(): void {
+    this.heroForm = this.formBuilder.group({
+      url: this.formBuilder.control(''),
+      name: this.formBuilder.control(''),
+      age: this.formBuilder.control(''),
+    });
   }
 
   goToHeroDetails(id: string): void {
