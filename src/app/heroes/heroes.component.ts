@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RxState } from '@rx-angular/state';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Observable } from 'rxjs';
-import { HeroesComponentStore } from './heroes.component-store';
+import { concatMap, startWith, Subject, tap } from 'rxjs';
+import { HeroService } from '../hero.service';
 
 export interface HeroProfile {
   id: string;
@@ -12,29 +13,52 @@ export interface HeroProfile {
   age?: number;
 }
 
+interface ComponentState {
+  heroes: HeroProfile[];
+}
+
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.scss'],
-  providers: [HeroesComponentStore]
+  styleUrls: ['./heroes.component.scss']
 })
-export class HeroesComponent implements OnInit {
+export class HeroesComponent extends RxState<ComponentState> implements OnInit {
   public heroForm: FormGroup;
-  public heroes$: Observable<HeroProfile[]>;
+  readonly heroes$ = this.select('heroes');
+  readonly createClick$ = new Subject<Event>();
+  readonly deleteClick$ = new Subject<string>();
 
   constructor(
-    private componentStore: HeroesComponentStore,
+    private heroService: HeroService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private router: Router,
     private changeDef: ChangeDetectorRef
-  ) { }
+  ) {
+    super();
+    this.spinner.show('list');
+    this.connect('heroes', this.heroService.getHeroesList().pipe(tap(() => this.spinner.hide('list'))));
+    this.hold(this.deleteClick$.pipe(concatMap((id) => {
+      this.spinner.show('list');
+      return this.heroService.deleteHero(id).pipe(tap(() => this.spinner.hide('list')));
+    })));
+  }
 
   ngOnInit(): void {
     this.buildHeroForm();
-    this.spinner.show('list');
-    this.componentStore.getHeroes();
-    this.heroes$ = this.componentStore.selectHeroes();
+    this.hold(this.createClick$.pipe(startWith(true)), (value) => {
+      if (typeof value !== 'boolean') {
+        this.spinner.show('create');
+        return this.heroService.createHero(this.heroForm?.value).subscribe(
+          (created) => {
+            console.log(created);
+            this.spinner.hide('create');
+            this.heroForm?.reset();
+            this.changeDef.markForCheck();
+          }
+        );
+      }
+    })
     this.changeDef.markForCheck();
   }
 
@@ -44,20 +68,6 @@ export class HeroesComponent implements OnInit {
       name: this.formBuilder.control(''),
       age: this.formBuilder.control(''),
     });
-  }
-
-  createHero(): void {
-    this.spinner.show('create');
-    const data = this.heroForm.value;
-    this.componentStore.createHero(data);
-    this.heroForm.reset();
-    this.changeDef.markForCheck();
-  }
-
-  deleteHero(id: string): void {
-    this.spinner.show('list');
-    this.componentStore.deleteHero(id);
-    this.changeDef.markForCheck();
   }
 
   goToHeroDetails(id: string): void {
