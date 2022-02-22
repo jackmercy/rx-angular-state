@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RxState } from '@rx-angular/state';
 import { HeroService } from '../hero.service';
@@ -14,6 +14,11 @@ interface ComponentState {
   styleUrls: ['./hero-profile.component.scss']
 })
 export class HeroProfileComponent extends RxState<ComponentState> implements OnInit {
+
+  // @Input() set hero(hero: HeroProfile) {
+  //   this.set({ hero });
+  // }
+
   hero$ = this.select('hero');
 
   get heroId(): string {
