@@ -1,34 +1,37 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { RxState } from '@rx-angular/state';
+import { HeroService } from '../hero.service';
 import { HeroProfile } from '../heroes/heroes.component';
-import { HeroProfileComponentStore } from './hero-profile.component-store';
+
+interface ComponentState {
+  hero: HeroProfile;
+}
 
 @Component({
   selector: 'app-hero-profile',
   templateUrl: './hero-profile.component.html',
-  styleUrls: ['./hero-profile.component.scss'],
-  providers: [HeroProfileComponentStore]
+  styleUrls: ['./hero-profile.component.scss']
 })
-export class HeroProfileComponent implements OnInit {
-  hero$: Observable<HeroProfile>;
+export class HeroProfileComponent extends RxState<ComponentState> implements OnInit {
+  hero$ = this.select('hero');
 
   get heroId(): string {
     return this.activatedRoute.snapshot.params?.['id'];
   }
 
   constructor(
+    private heroService: HeroService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private readonly componentStore: HeroProfileComponentStore,
     private changeDef: ChangeDetectorRef
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     if (this.heroId) {
-      this.componentStore.getHero(this.heroId);
-      this.hero$ = this.componentStore.selectedHero();
-
+      this.connect('hero', this.heroService.getHeroDetails(this.heroId));
       this.changeDef.markForCheck();
     }
   }
